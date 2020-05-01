@@ -1,0 +1,28 @@
+{
+  "name": "firebase-auth-express-middleware",
+  "version": "0.0.1",
+  "description": "Firebase auth's JWT verifier as an Express JS middleware",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Enkel-Digital/firebase-auth-express-middleware.git"
+  },
+  "keywords": [
+    "Firebase",
+    "auth",
+    "Express",
+    "middleware"
+  ],
+  "bugs": {
+    "url": "https://github.com/Enkel-Digital/firebase-auth-express-middleware/issues"
+  },
+  "homepage": "https://github.com/Enkel-Digital/firebase-auth-express-middleware#readme",
+  "author": "JJ",
+  "license": "MIT",
+  "dependencies": {
+    "firebase-admin": "^8.11.0"
+  }
+}
