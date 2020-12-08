@@ -30,15 +30,15 @@ module.exports = async function auth(req, res, next) {
 
       return next();
     } else {
-      // 401 Missing auth
-      return res.status(403).json({
+      // 401 Missing auth token thus unauthorised
+      return res.status(401).json({
         success: false,
         error: "MISSING AUTH",
       });
     }
   } catch (error) {
     // 403 identity known but denied / failed authentication
-    return res.status(401).json({
+    return res.status(403).json({
       success: false,
       error: error.message || "UNAUTHORIZED",
     });
