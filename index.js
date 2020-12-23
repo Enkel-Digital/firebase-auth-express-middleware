@@ -1,6 +1,11 @@
 /**
  * Auth middleware
  * Using "Firebase Auth" for authentication
+ *
+ * Support auth token passed via the Bearer token way
+ * Will end the connection in this middleware if there is an error instead of relying on a 500 middleware
+ * Request will end if JWT is invalid of if the JWT is missing
+ * If authenticated, the decoded JWT will be attached to request for use downstream
  */
 
 const admin = require("firebase-admin");
@@ -8,10 +13,13 @@ const admin = require("firebase-admin");
 // Factory function to setup the middleware
 module.exports = function setup({
   attachUserTo = "authenticatedUser",
+
   errorJSON = {
     ok: false,
   },
+
   errorMessage = (errorObject) => errorObject.message || "UNAUTHORIZED",
+
   // Allow users to pass in an error handler to deal with every error, for example to log to APM service
   errorHandler,
 }) {
@@ -21,6 +29,11 @@ module.exports = function setup({
     else
       throw new Error("Only Functions or Strings are allowed for errorMessage");
 
+  /**
+   * Apply this middleware to auth protected routes.
+   * This middleware allows all users' requests with valid firebase auth tokens through.
+   * Thus business logics need to handle extra conditions locally. E.g. user can only request for their own data.
+   */
   return async function auth(req, res, next) {
     try {
       // Get auth token if available and if it follows the "bearer" pattern
