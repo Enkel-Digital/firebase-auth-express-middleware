@@ -8,10 +8,10 @@
  * If authenticated, the decoded JWT will be attached to request for use downstream
  */
 
-const admin = require("firebase-admin");
-
 // Factory function to setup the middleware
 module.exports = function setup({
+  firebaseAdmin = require("firebase-admin"),
+
   attachUserTo = "authenticatedUser",
 
   errorJSON = {
@@ -44,8 +44,8 @@ module.exports = function setup({
         req.headers.authorization &&
         req.headers.authorization.split(" ")[0] === "Bearer"
       ) {
-        // req[attachUserTo] = await admin
-        const decodedToken = await admin
+        // req[attachUserTo] = await firebaseAdmin
+        const decodedToken = await firebaseAdmin
           .auth()
           .verifyIdToken(req.headers.authorization.split(" ")[1]);
 
