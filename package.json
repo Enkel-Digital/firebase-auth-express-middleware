@@ -1,14 +1,11 @@
 {
   "name": "firebase-auth-express-middleware",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "files": [
     "./index.js"
   ],
   "description": "Firebase auth's JWT verifier as an Express JS middleware",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Enkel-Digital/firebase-auth-express-middleware.git"

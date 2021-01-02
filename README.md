@@ -1,6 +1,4 @@
 # firebase-auth-express-middleware
-[![npm version](https://badge.fury.io/js/firebase-auth-express-middleware.svg)](https://www.npmjs.com/package/firebase-auth-express-middleware)
-<span class="badge-patreon"><a href="https://www.patreon.com/jaimeloeuf" title="Donate to this project using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a></span>
 - An Express JS middleware to simplify the verification process of JWT tokens provided by the firebase auth service.
 - Use this to ensure only requests made from users logged in via firebase auth service can pass through.
 - User data will also be extracted from the decoded firebase auth token for you to use downstream in your middleware or route handlers.
@@ -44,9 +42,9 @@ View [samples](./samples) folder for more specific examples
 - Validates the JWT using the verifyIdTokens API from the Firebase Admin SDK and attaches the decoded token to either req.authenticatedUser or a user specified property.
 - See <https://firebase.google.com/docs/auth/admin/verify-id-tokens>
 
-## Debug mode
-By default, the middleware will log and output to console, you can disable them by setting
-your environment variable for `DEBUG` to `false`
+<!-- ## Debug mode -->
+<!-- By default, the middleware will log and output to console, you can disable them by setting -->
+<!-- your environment variable for `DEBUG` to `false` -->
 
 ## License and Author
 This project is made available under MIT © LICENSE
