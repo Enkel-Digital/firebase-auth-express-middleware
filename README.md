@@ -4,6 +4,7 @@
 - An Express JS middleware to simplify the verification process of JWT tokens provided by the firebase auth service.
 - Use this to ensure only requests made from users logged in via firebase auth service can pass through.
 - User data will also be extracted from the decoded firebase auth token for you to use downstream in your middleware or route handlers.
+- You need to setup firebase admin first, running initializeApp before using this middleware, thus the firebaseAdmin module needs to be passed in from the client app to the setup function.
 
 ## Installation
 ```shell

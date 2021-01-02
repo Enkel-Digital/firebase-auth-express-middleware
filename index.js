@@ -10,7 +10,7 @@
 
 // Factory function to setup the middleware
 module.exports = function setup({
-  firebaseAdmin = require("firebase-admin"),
+  firebaseAdmin,
 
   attachUserTo = "authenticatedUser",
 
@@ -23,6 +23,9 @@ module.exports = function setup({
   // Allow users to pass in an error handler to deal with every error, for example to log to APM service
   errorHandler,
 }) {
+  if (!firebaseAdmin)
+    throw new Error("Firebase Admin package MUST BE passed into setup!");
+
   // Assume that it can only be a string or function
   if (typeof errorMessage !== "function")
     if (typeof errorMessage === "string") errorMessage = () => errorMessage;
@@ -62,7 +65,7 @@ module.exports = function setup({
       // 401 Missing auth token thus unauthorised
       else
         return res.status(401).json({
-          success: false,
+          ok: false,
           error: "MISSING AUTH",
         });
     } catch (error) {

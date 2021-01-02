@@ -1,6 +1,6 @@
 {
   "name": "firebase-auth-express-middleware",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Firebase auth's JWT verifier as an Express JS middleware",
   "main": "index.js",
   "scripts": {
@@ -21,8 +21,5 @@
   },
   "homepage": "https://github.com/Enkel-Digital/firebase-auth-express-middleware#readme",
   "author": "JJ",
-  "license": "MIT",
-  "peerDependencies": {
-    "firebase-admin": "^9.4.2"
-  }
+  "license": "MIT"
 }
