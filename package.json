@@ -22,7 +22,7 @@
   "homepage": "https://github.com/Enkel-Digital/firebase-auth-express-middleware#readme",
   "author": "JJ",
   "license": "MIT",
-  "dependencies": {
-    "firebase-admin": "^8.11.0"
+  "peerDependencies": {
+    "firebase-admin": "^9.4.2"
   }
 }
