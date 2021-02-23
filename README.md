@@ -21,11 +21,7 @@ View [samples](./samples) folder for more specific examples
 
 2. When requesting, and token is valid, you can get the `user` object from request
     ```js
-    router.get('/api/example', (req, res) => {
-        res.json({
-            message: `You're logged in as ${req.locals.user.email} with Firebase UID: ${req.locals.user.uid}`
-        });
-    });
+    router.get('/api/example', (req, res) => res.send(`You're logged in as ${req.authenticatedUser.email} with Firebase UID: ${req.authenticatedUser.uid}`));
     ```
 
     if it fails, you get the following 401 header and response.

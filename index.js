@@ -9,20 +9,15 @@
  */
 
 // Factory function to setup the middleware
-module.exports = function setup({
+module.exports = function setup(
   firebaseAdmin,
-
-  attachUserTo = "authenticatedUser",
-
-  errorJSON = {
-    ok: false,
-  },
-
-  errorMessage = (errorObject) => errorObject.message || "UNAUTHORIZED",
-
-  // Allow users to pass in an error handler to deal with every error, for example to log to APM service
-  errorHandler,
-}) {
+  {
+    attachUserTo = "authenticatedUser",
+    errorJSON = { ok: false },
+    errorMessage = (errorObject) => errorObject.message || "UNAUTHORIZED",
+    errorHandler, // Allow users to pass in an error handler to deal with every error, for example to log to APM service
+  }
+) {
   if (!firebaseAdmin)
     throw new Error("Firebase Admin package MUST BE passed into setup!");
 
