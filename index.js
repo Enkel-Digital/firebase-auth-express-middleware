@@ -16,7 +16,7 @@ module.exports = function setup(
     errorJSON = { ok: false },
     errorMessage = (errorObject) => errorObject.message || "UNAUTHORIZED",
     errorHandler, // Allow users to pass in an error handler to deal with every error, for example to log to APM service
-  }
+  } = {} // Last argument is optional
 ) {
   if (!firebaseAdmin)
     throw new Error("Firebase Admin package MUST BE passed into setup!");
