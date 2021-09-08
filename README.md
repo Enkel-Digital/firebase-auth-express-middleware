@@ -18,8 +18,12 @@ View [samples](./samples) folder for more specific examples
     ```
 
    You can get your token here (https://firebase.google.com/docs/auth/admin/verify-id-tokens) from the client SDK.
+   
+   ```js
+      app.use( require("firebase-auth-express-middleware") )
+    ``
 
-2. When requesting, and token is valid, you can get the `user` object from request
+3. When requesting, and token is valid, you can get the `user` object from request
     ```js
     router.get('/api/example', (req, res) => res.send(`You're logged in as ${req.authenticatedUser.email} with Firebase UID: ${req.authenticatedUser.uid}`));
     ```
