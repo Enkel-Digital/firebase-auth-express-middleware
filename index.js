@@ -42,18 +42,14 @@ module.exports = function setup(
         req.headers.authorization &&
         req.headers.authorization.split(" ")[0] === "Bearer"
       ) {
-        // req[attachUserTo] = await firebaseAdmin
         const decodedToken = await firebaseAdmin
           .auth()
           .verifyIdToken(req.headers.authorization.split(" ")[1]);
 
         // Attach to req for use downstream
         // Users can choose what key to attach the decoded token to.
-        // Store only custom claims if any, and other useful properties
-        req[attachUserTo] = {
-          uid: decodedToken.uid,
-          email: decodedToken.email,
-        };
+        // @todo Store only custom claims if any, and other useful properties
+        req[attachUserTo] = decodedToken;
 
         return next();
       }
