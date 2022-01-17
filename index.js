@@ -10,7 +10,7 @@
 
 // Factory function to setup the middleware
 module.exports = function setup(
-  firebaseAdmin,
+  firebaseAuth,
   {
     attachUserTo = "authenticatedUser",
     errorJSON = { ok: false },
@@ -18,8 +18,8 @@ module.exports = function setup(
     errorHandler, // Allow users to pass in an error handler to deal with every error, for example to log to APM service
   } = {} // Last argument is optional
 ) {
-  if (!firebaseAdmin)
-    throw new Error("Firebase Admin package MUST BE passed into setup!");
+  if (!firebaseAuth)
+    throw new Error("Firebase Admin auth service MUST BE passed into setup!");
 
   // Assume that it can only be a string or function
   if (typeof errorMessage !== "function")
@@ -34,36 +34,40 @@ module.exports = function setup(
    */
   return async function auth(req, res, next) {
     try {
-      // Get auth token if available and if it follows the "bearer" pattern
-      // @notice Headers are all lowercased by express
-      // https://firebase.google.com/docs/auth/admin/verify-id-tokens#verify_id_tokens_using_the_firebase_admin_sdk
-      // The verifyIdToken needs a project ID, but should be taken care of if firebase admin has been initialised properly or runs on gcp infra
-      if (
-        req.headers.authorization &&
-        req.headers.authorization.split(" ")[0] === "Bearer"
-      ) {
-        const decodedToken = await firebaseAdmin
-          .auth()
-          .verifyIdToken(req.headers.authorization.split(" ")[1]);
+      // Get auth token if available
+      // Note that headers are all lowercased by express
+      if (req.headers.authorization) {
+        const authHeader = req.headers.authorization.split(" ");
 
-        // Attach to req for use downstream
-        // Users can choose what key to attach the decoded token to.
-        // @todo Store only custom claims if any, and other useful properties
-        req[attachUserTo] = decodedToken;
+        // Check if the auth header follows the "bearer" pattern
+        if (authHeader[0] === "Bearer") {
+          // https://firebase.google.com/docs/auth/admin/verify-id-tokens#verify_id_tokens_using_the_firebase_admin_sdk
+          // The verifyIdToken needs a project ID, but should be taken care of if firebase admin has been initialised properly or runs on gcp infra
+          //
+          // Attach decoded token to req object to use downstream
+          // Users can choose what key to attach the decoded token to.
+          req[attachUserTo] = await firebaseAuth.verifyIdToken(authHeader[1]);
 
-        return next();
+          // Break out of this middleware and continue with the next one
+          return next();
+        }
       }
+
+      // If token missing or token malformed, end the request in this middleware
       // 401 Missing auth token thus unauthorised
-      else
-        return res.status(401).json({
-          ok: false,
-          error: "MISSING AUTH",
-        });
+      return res.status(401).json({
+        ok: false,
+        error: "MISSING AUTH",
+      });
     } catch (error) {
       // 403 identity known but denied / failed authentication
       res.status(403).json({
-        ...errorJSON, // Use the error json passed by user
+        ok: false,
         error: errorMessage(error), // Generate the error message
+
+        // Use the error json passed by user
+        // Use this after the standard keys so that user's error JSON can override it
+        ...errorJSON,
       });
 
       // Run user's custom error handler if any
