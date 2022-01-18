@@ -1,8 +1,8 @@
 {
   "name": "firebase-auth-express-middleware",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "files": [
-    "./index.js"
+    "src"
   ],
   "description": "Firebase auth's JWT verifier as an Express JS middleware",
   "main": "index.js",
