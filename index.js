@@ -1,6 +1,5 @@
 /**
- * Auth middleware
- * Using "Firebase Auth" for authentication
+ * Authentication middleware using Firebase Auth
  *
  * Support auth token passed via the Bearer token way
  * Will end the connection in this middleware if there is an error instead of relying on a 500 middleware
@@ -15,7 +14,10 @@ module.exports = function setup(
     attachUserTo = "authenticatedUser",
     errorJSON = { ok: false },
     errorMessage = (errorObject) => errorObject.message || "UNAUTHORIZED",
-    errorHandler, // Allow users to pass in an error handler to deal with every error, for example to log to APM service
+
+    // Allow users to pass in an error handler to deal with every error, for example to log to APM service
+    // The object sent back to client on error will also be passed into this function if provided
+    errorHandler,
   } = {} // Last argument is optional
 ) {
   if (!firebaseAuth)
@@ -27,8 +29,29 @@ module.exports = function setup(
     else
       throw new Error("Only Functions or Strings are allowed for errorMessage");
 
+  // Create function used to end request in this middleware and call error handler if any
+  function authFailed(status, error) {
+    res.status(status).json({
+      error,
+
+      // No need to set ok: false as this is the default value in errorJSON
+
+      // Use the error json passed by user
+      // Use this after the standard keys so that user's error JSON can override it
+      ...errorJSON,
+    });
+
+    // @todo errorMessage function CANNOT BE ASYNCHRONOUS... and it cannot throw!! If the fn throws then it will crash the express app
+    // Run user's custom error handler if any
+    if (errorHandler) {
+      // Set status onto object too so that user's error handler can have access to it
+      resObj.status = status;
+      errorHandler(resObj);
+    }
+  }
+
   /**
-   * Apply this middleware to auth protected routes.
+   * Apply this middleware to protected routes that require authentication.
    * This middleware allows all users' requests with valid firebase auth tokens through.
    * Thus business logics need to handle extra conditions locally. E.g. user can only request for their own data.
    */
@@ -55,23 +78,12 @@ module.exports = function setup(
 
       // If token missing or token malformed, end the request in this middleware
       // 401 Missing auth token thus unauthorised
-      return res.status(401).json({
-        ok: false,
-        error: "MISSING AUTH",
-      });
+      authFailed(401, "MISSING OR MALFORMED AUTH");
     } catch (error) {
+      // If verifyIdToken method threw an error, end the request in this middleware
+      // Generate the error message first before passing in the final string
       // 403 identity known but denied / failed authentication
-      res.status(403).json({
-        ok: false,
-        error: errorMessage(error), // Generate the error message
-
-        // Use the error json passed by user
-        // Use this after the standard keys so that user's error JSON can override it
-        ...errorJSON,
-      });
-
-      // Run user's custom error handler if any
-      if (errorHandler) errorHandler(error);
+      authFailed(403, errorMessage(error));
     }
   };
 };
