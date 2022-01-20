@@ -1,13 +1,16 @@
 # firebase-auth-express-middleware
-- An Express JS middleware to simplify the verification process of JWT tokens provided by the firebase auth service.
-- Use this to ensure only requests made from users logged in via firebase auth service can pass through.
-- User data will also be extracted from the decoded firebase auth token for you to use downstream in your middleware or route handlers.
-- You need to setup firebase admin first, running initializeApp before using this middleware, thus the firebaseAdmin module needs to be passed in from the client app to the setup function.
+An Express JS middleware to simplify writing authentication and authorization logic for API using firebase auth.
+
+1. Use authentication middleware to ensure only requests made with JWT tokens provided by the firebase auth service from logged in users can pass through.
+2. Use authorization middleware with a predicate to decide which requests to allow based on the requests' JWT values.
+3. The decoded firebase auth token with user data will also be available for you to use downstream in your middlewares and route handlers.
+
 
 ## Installation
 ```shell
-npm install --save firebase-auth-express-middleware
+npm install firebase-auth-express-middleware
 ```
+
 
 ## How to use (Sample usage)
 View [samples](./samples) folder for more specific examples
@@ -35,8 +38,8 @@ View [samples](./samples) folder for more specific examples
 
 
 ## Token (JWT) verification
-- Validates the JWT using the verifyIdTokens API from the Firebase Admin SDK and attaches the decoded token to either req.authenticatedUser or a user specified property.
-- See <https://firebase.google.com/docs/auth/admin/verify-id-tokens>
+- Validates JWT using verifyIdTokens method from Firebase Admin's auth service, and attaches decoded token to either req.authenticatedUser or a user specified property.
+    - See <https://firebase.google.com/docs/auth/admin/verify-id-tokens>
 
 <!-- ## Debug mode -->
 <!-- By default, the middleware will log and output to console, you can disable them by setting -->
