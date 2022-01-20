@@ -26,7 +26,7 @@ module.exports = function setup(
       throw new Error("Only Functions or Strings are allowed for errorMessage");
 
   // Create function used to end request in this middleware and call error handler if any
-  function authFailed(status, error) {
+  function authFailed(res, status, error) {
     res.status(status).json({
       error,
 
@@ -66,12 +66,12 @@ module.exports = function setup(
       // Else if predicate failed, means user is unauthorised to access resource,
       // end the request in this middleware with 403 unauthorised
       // 403 identity known but denied / unauthorised
-      authFailed(403, "UNAUTHORIZED");
+      authFailed(res, 403, "UNAUTHORIZED");
     } catch (error) {
       // If predicate function threw an error, end the request in this middleware
       // Generate the error message first before passing in the final string
       // 403 identity known but denied / failed authentication
-      authFailed(403, errorMessage(error));
+      authFailed(res, 403, errorMessage(error));
     }
   };
 };
