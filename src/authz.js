@@ -57,11 +57,12 @@ module.exports = function setup(
       // Since users can choose what key to attach the decoded token to in authentication middleware,
       // users need to specify the key again for authorization middleware to be able to access it.
       //
-      // If predicate returns true with the given claims, user is authorized to access resource, call next middleware
+      // If predicate returns true with the given claims and request object,
+      // user is authorized to access resource, thus call next middleware.
       // Predicate must return true or false, does not accept truthy values in place of true
       // Break out of this middleware and continue with the next one
       if (req[attachUserTo])
-        if ((await predicate(req[attachUserTo])) === true) return next();
+        if ((await predicate(req[attachUserTo], req)) === true) return next();
 
       // Else if predicate failed, means user is unauthorised to access resource,
       // end the request in this middleware with 403 unauthorised
