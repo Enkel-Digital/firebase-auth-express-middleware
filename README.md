@@ -99,6 +99,7 @@ View [samples](./samples) folder for more specific examples
 
 
 ## Notes
+### Attaching decoded token to a custom key on Request object
 Since authentication middleware allows you to choose which key to attach the decoded token to using the `attachUserTo` variable during setup, if you would like to use authorization middleware too, then you MUST ensure that they both use the same key to reference the token.
 
 ```js
@@ -117,6 +118,10 @@ app.get(
     }
 );
 ```
+
+### Why are there 2 middlewares? Why can't it just be one?
+The reason why authn and authz are 2 separate middlewares is because, if combined then the parsing auth header code will be repeated every single route, when in practice (most of the time) all if not most routes are authentication protected, with every route using a different function to check if user is authorised.  
+So it is easier to have them as 2 seperate middlewares, to apply authentication middleware over all routes, while using specific authorization middlewares for individual route.
 
 
 ## Token (JWT) verification
