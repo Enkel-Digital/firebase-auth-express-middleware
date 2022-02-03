@@ -1,11 +1,11 @@
 {
   "name": "firebase-auth-express-middleware",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": [
     "src"
   ],
   "description": "Firebase auth's JWT verifier as an Express JS middleware",
-  "main": "index.js",
+  "main": "./src/index.js",
   "peerDependencies": {
     "firebase-admin": "10.x"
   },
