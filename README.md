@@ -9,6 +9,8 @@ An Express JS middleware to simplify writing authentication and authorization lo
 ## Prerequisites
 This auth middleware requires the [firebase-admin](https://www.npmjs.com/package/firebase-admin) library of version `10.x` as a peer dependency (you just need to install firebase-admin as a normal dependency in the same codebase as where you want to use this middleware).
 
+When using `firebase-admin` library directly, setting it up manually can be quite tedious as you will see in the example below. A much simpler alternative is to use wrapper libraries like <https://www.npmjs.com/package/@enkeldigital/firebase-admin> to setup `firebase-admin` automatically so that you can directly import and start using it.
+
 If you would like to use an older version of firebase-admin library, you would need an older version of this middleware that have some API differences, and importantly only works for authentication and not authorization. You would need to manually handle authorization logic and ending the request yourself. The older version of this library can be found [here](https://www.npmjs.com/package/firebase-auth-express-middleware/v/0.2.1).
 
 
