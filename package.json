@@ -1,6 +1,7 @@
 {
   "name": "firebase-auth-express-middleware",
-  "version": "1.0.4",
+  "version": "1.0.5",
+  "types": "src/index.d.ts",
   "files": [
     "src"
   ],
@@ -27,5 +28,9 @@
   },
   "homepage": "https://github.com/Enkel-Digital/firebase-auth-express-middleware#readme",
   "author": "JJ",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "firebase-admin": "^10.0.2"
+  }
 }
