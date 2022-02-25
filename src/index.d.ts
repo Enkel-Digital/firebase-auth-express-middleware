@@ -1,4 +1,4 @@
-import type { RequestHandler } from "express";
+import type { Request, RequestHandler } from "express";
 import type { auth } from "firebase-admin";
 
 export const authn: (
@@ -19,7 +19,7 @@ export const authn: (
 ) => RequestHandler;
 
 export const authz: (
-  predicate: (token: auth.DecodedIdToken) => boolean,
+  predicate: (token: auth.DecodedIdToken, req?: Request) => boolean,
   {
     attachUserTo,
     errorJSON,
