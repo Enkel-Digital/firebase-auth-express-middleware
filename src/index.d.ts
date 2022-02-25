@@ -19,7 +19,7 @@ export const authn: (
 ) => RequestHandler;
 
 export const authz: (
-  predicate: (token: auth.DecodedIdToken, req?: Request) => boolean,
+  predicate: (token: auth.DecodedIdToken, req: Request) => boolean,
   {
     attachUserTo,
     errorJSON,
