@@ -2,7 +2,10 @@ import type { Request, RequestHandler } from "express";
 import type { auth } from "firebase-admin";
 
 declare function _exports(
-  predicate: (token: auth.DecodedIdToken, req: Request) => boolean,
+  predicate: (
+    token: auth.DecodedIdToken,
+    req: Request
+  ) => boolean | Promise<boolean>,
   {
     attachUserTo,
     errorJSON,
