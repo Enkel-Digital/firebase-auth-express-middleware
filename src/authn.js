@@ -53,7 +53,6 @@ module.exports = function setup(
   /**
    * Apply this middleware to protected routes that require authentication.
    * This middleware allows all users' requests with valid firebase auth tokens through.
-   * Thus business logics need to handle extra conditions locally. E.g. user can only request for their own data.
    */
   return async function auth(req, res, next) {
     try {

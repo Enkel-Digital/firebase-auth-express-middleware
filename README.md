@@ -130,11 +130,6 @@ So it is easier to have them as 2 seperate middlewares, to apply authentication 
 - Validates JWT using verifyIdTokens method from Firebase Admin's auth service, and attaches decoded token to either req.authenticatedUser or a user specified property.
     - See <https://firebase.google.com/docs/auth/admin/verify-id-tokens>
 
-<!-- ## Debug mode -->
-<!-- By default, the middleware will log and output to console, you can disable them by setting -->
-<!-- your environment variable for `DEBUG` to `false` -->
 
 ## License and Author
-This project is made available under MIT © LICENSE
-Author(s):
-- [JJ](https://github.com/Jaimeloeuf)
+This project is made available under MIT LICENSE and written by [JJ](https://github.com/Jaimeloeuf)
