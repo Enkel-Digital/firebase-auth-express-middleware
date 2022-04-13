@@ -11,6 +11,7 @@
 module.exports = function setup(
   firebaseAuth,
   {
+    checkRevoked = false,
     attachUserTo = "authenticatedUser",
     errorJSON = { ok: false },
     errorMessage = (errorObject) => errorObject.message || "UNAUTHORIZED",
@@ -68,7 +69,10 @@ module.exports = function setup(
           //
           // Attach decoded token to req object to use downstream
           // Users can choose what key to attach the decoded token to.
-          req[attachUserTo] = await firebaseAuth.verifyIdToken(authHeader[1]);
+          req[attachUserTo] = await firebaseAuth.verifyIdToken(
+            authHeader[1],
+            checkRevoked
+          );
 
           // Break out of this middleware and continue with the next one
           return next();
