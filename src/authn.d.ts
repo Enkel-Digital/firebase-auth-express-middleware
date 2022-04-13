@@ -4,11 +4,13 @@ import type { auth } from "firebase-admin";
 declare function _exports(
   firebaseAuth: auth.Auth,
   {
+    checkRevoked,
     attachUserTo,
     errorJSON,
     errorMessage,
     errorHandler,
   }?: {
+    checkRevoked?: boolean;
     attachUserTo?: string;
     errorJSON?: {
       ok: boolean;

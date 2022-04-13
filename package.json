@@ -1,12 +1,15 @@
 {
   "name": "firebase-auth-express-middleware",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "types": "src/index.d.ts",
   "files": [
     "src"
   ],
   "description": "Firebase auth's JWT verifier as an Express JS middleware",
   "main": "./src/index.js",
+  "scripts": {
+    "npm-publish": "git stash --include-untracked && npm publish && git stash apply"
+  },
   "peerDependencies": {
     "firebase-admin": "10.x"
   },

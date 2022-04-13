@@ -4,11 +4,13 @@ import type { auth } from "firebase-admin";
 export const authn: (
   firebaseAuth: auth.Auth,
   {
+    checkRevoked,
     attachUserTo,
     errorJSON,
     errorMessage,
     errorHandler,
   }?: {
+    checkRevoked?: boolean;
     attachUserTo?: string;
     errorJSON?: {
       ok: boolean;
